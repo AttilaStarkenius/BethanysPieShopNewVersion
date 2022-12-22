@@ -18,10 +18,19 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+
 namespace BethanysPieShopNewVersion
 {
     public class Program
     {
+        //public IConfiguration Configuration { get; }
+
+        //public Program(IConfiguration configuration)
+        //{
+        //    Configuration = configuration;
+        //}
+
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
@@ -30,6 +39,9 @@ namespace BethanysPieShopNewVersion
             builder.Services.AddControllersWithViews();
 
             //register our own services(more later)
+
+            builder.Services.AddDbContext<AppDbContext>(options =>
+            options.UseSqlServer(/*Configuration.GetConnectionString("DefaultConnection")*/));
             builder.Services.AddScoped<IPieRepository, MockPieRepository>();
             builder.Services.AddScoped<ICategoryRepository, MockCategoryRepository>();
             //services.AddTransient
